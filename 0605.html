@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <title>購物系統</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            padding: 20px;
+        }
+
+        .product {
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+        }
+
+        #totalDisplay {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="showTotal()">購物車總額</button>
+    <button onclick="clearCart()">清空購物車</button>
+
+    <div class="product">
+        <img src="https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePage/10330662/0/638792918767830000?v=1" alt="商品1">
+        <p>不易滑脫鋼製衣架/10支組</p>
+        <p>$149</p>
+        <button onclick="addToCart(149)">加入購物車</button>
+    </div>
+
+    <div class="product">
+        <img src="https://diz36nn4q02zr.cloudfront.net/webapi/imagesV3/Original/SalePageSKU/32500394/0/638847108787030000?v=1" alt="商品2">
+        <p>黃麻購物袋A4原色</p>
+        <p>$79</p>
+        <button onclick="addToCart(79)">加入購物車</button>
+    </div>
+
+    <div id="totalDisplay">目前總金額：$0</div>
+
+    <script>
+    // 1. 初始設定：從 localStorage 抓初始值
+    let total = localStorage.getItem("cartTotal");
+    if (!total) {
+      total = 0;
+    } else {
+      total = parseInt(total);
+    }
+    updateDisplay();
+
+    // 2. 加入購物車
+    function addToCart(amount) {
+      total += amount;
+      localStorage.setItem("cartTotal", total);
+      console.log("目前金額：$" + total);
+      updateDisplay();
+    }
+
+    // 3. 顯示總額（按鈕功能）
+    function showTotal() {
+      alert("購物車總金額為：$" + total);
+      console.log("總額 alert 顯示");
+    }
+
+    // 4. 清空購物車
+    function clearCart() {
+      total = 0;
+      localStorage.removeItem("cartTotal");
+      updateDisplay();
+      console.log("購物車已清空");
+    }
+
+    // 5. 更新畫面顯示
+    function updateDisplay() {
+      document.getElementById("totalDisplay").textContent = "目前總金額：$" + total;
+    }
+    </script>
+
+</body>
+</html>
